@@ -1,0 +1,23 @@
+.card-list {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.car-card {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 30px 20px 20px;
+    position: relative;
+    max-width: 200px;
+    display: inline-block;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14);
+    border-radius: 5px;
+   
+}
+
+.car-card * {
+    padding: 0;
+    margin: 0;
+}
