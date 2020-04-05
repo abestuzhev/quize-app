@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Car from './Car/Car.js';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary.js';
+import Counter from './Counter/Counter.js';
 import './App.css';
 
 class App extends Component {
@@ -9,8 +11,8 @@ class App extends Component {
         super(props);
         this.state = {
             cars: [
-                // {name:'Ford', year: 2020},
-                // {name:'Audi', year: 2017},
+                {name:'Ford', year: 2020},
+                {name:'Audi', year: 2017},
                 {name:'Mazda', year: 2016}
             ],
             pageTitle: 'React components',
@@ -63,13 +65,14 @@ class App extends Component {
         if(this.state.showCars){
             cars = this.state.cars.map((car, index) => {
                 return (
+                    <ErrorBoundary key= {index}>
                     <Car 
-                        key= {index}
                         name={car.name} 
                         year={car.year}
                         onDelete = {this.deleteHandler.bind(this, index)}
                         onChangeName = { (event) => this.onChangeName(event.target.value, index) }
                     />
+                    </ErrorBoundary>
                 )
             })
         }
@@ -78,6 +81,10 @@ class App extends Component {
         return ( 
             <div style={divStyle}>
                 <h2> {this.state.pageTitle} </h2> 
+
+                <div className="c-row">
+                    <Counter />
+                </div>
 
                 <div className="c-row">
                 <button 
