@@ -1,5 +1,7 @@
 import React from 'react';
 import './Car.css';
+import withClass from '../hoc/withClass';
+import PropTypes from 'prop-types';
 
 class Car extends React.Component {
 
@@ -50,8 +52,8 @@ class Car extends React.Component {
         }
     
         return (
-            <div className="card-list__item">
-                <div className="car-card" >
+            <div className="car-card">
+                <React.Fragment>
                     <h3>Car name: {this.props.name}</h3>
                     <strong>Year: {this.props.year}</strong>
                     <div>
@@ -63,10 +65,18 @@ class Car extends React.Component {
                     </div>
                     
                     <button onClick={this.props.onDelete} className="c-btn-del"></button>
-                </div>
+                </React.Fragment>
             </div>
         )
     }
 }
 
-export default Car;
+
+Car.propTypes = {
+    name: PropTypes.string.isRequired,
+    year: PropTypes.number,
+    onChangeName: PropTypes.func,
+    onDelete: PropTypes.func  
+}
+
+export default withClass(Car, 'card-list__item');
