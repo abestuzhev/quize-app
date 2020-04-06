@@ -5,6 +5,17 @@ import PropTypes from 'prop-types';
 
 class Car extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.inputRef = React.createRef();
+    }
+
+    componentDidMount(){
+        if(this.props.index === 0){
+            this.inputRef.current.focus();
+        }
+        
+    }
     // жизненные циклы изменения компонента
     componentWillReceiveProps(nextProps){
         console.log('Car componentWillReceiveProps', nextProps );
@@ -58,6 +69,7 @@ class Car extends React.Component {
                     <strong>Year: {this.props.year}</strong>
                     <div>
                         <input 
+                        ref={this.inputRef}
                         type="text" 
                         className={inputClasses.join(' ')} 
                         onChange = {this.props.onChangeName} 
@@ -75,6 +87,7 @@ class Car extends React.Component {
 Car.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.number,
+    index: PropTypes.number,
     onChangeName: PropTypes.func,
     onDelete: PropTypes.func  
 }
