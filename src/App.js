@@ -1,14 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import Layout from './hoc/Layout/Layout';
+import Quize from './containers/Quize/Quize.js';
 
 function App() {
   return (
     <div className="App">
       <Layout>
-         <div>
-           <h1>Layout</h1>
-         </div>
+         <Quize />
       </Layout>
     </div>
   );

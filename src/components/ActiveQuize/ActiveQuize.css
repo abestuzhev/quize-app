@@ -1,0 +1,13 @@
+.ActiveQuize {
+    border: 2px solid #fff;
+    padding: 20px 30px;
+    border-radius: 6px;
+    position: relative;
+    width: 600px;
+}
+
+.ActiveQuize_Counter {
+    position: absolute;
+    right: 20px;
+    top: 14px;
+}
