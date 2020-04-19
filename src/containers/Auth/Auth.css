@@ -1,0 +1,44 @@
+.Auth {
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px 30px;
+    flex-grow: 1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: linear-gradient(270deg, #cef2fa 0%, #59bfef 100%);
+}
+
+.Auth > div {
+    width: 400px;
+}
+
+.Auth * {
+    box-sizing: border-box;
+}
+
+.Auth h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.c-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.c-input-wrapper {
+    margin-bottom: 14px;
+}
+
+.c-input-wrapper .c-input {
+}
+
+.c-input-col {
+    width: 100%;
+    margin-bottom: 10px;
+}
