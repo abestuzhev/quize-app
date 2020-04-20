@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import classes from './Quize.css';
 import ActiveQuize from '../../components/ActiveQuize/ActiveQuize'
 import FinishedQuize from '../../components/FinishedQuize/FinishedQuize'
+import axios from '../../axios/axios-quize';
+import Loader from "../../components/UI/Loader/Loader";
+
 
 class Quize extends Component {
 
@@ -10,31 +13,9 @@ class Quize extends Component {
         isFinished: false,
         activeQuestion: 0,
         answerState: null, //{[id]: 'success' 'error'}
-        quize: [
-            {
-                question: 'Сколько звезд на небе?',
-                rightAnswerId: 1,
-                id: 1,
-                answers: [
-                    {text: '10 млн', id: 1},
-                    {text: '50 млн', id: 2},
-                    {text: '100 млн', id: 3},
-                    {text: 'никто не считал', id: 4}
-                ]
-            },
-            {
-                question: 'Сколько песчинок в 1кг песка?',
-                rightAnswerId: 2,
-                id: 2,
-                answers: [
-                    {text: '1 млн', id: 1},
-                    {text: '5 млн', id: 2},
-                    {text: '10 млн', id: 3},
-                    {text: 'никто не считал', id: 4}
-                ]
-            }
-        ]
-    }
+        quize: [],
+        loading: true
+    };
 
     onAnswerClickHandler = (answerId)=> {
         if(this.state.answerState){
@@ -48,7 +29,7 @@ class Quize extends Component {
         const question = this.state.quize[this.state.activeQuestion];
         const  results = this.state.results;
 
-        if(question.rightAnswerId === answerId) {
+        if(question.rightAnswer === answerId) {
 
             if(!results[answerId]){
                 results[answerId] = 'success';
@@ -96,7 +77,21 @@ class Quize extends Component {
         });
     };
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        try {
+            const response = await axios.get(`/quize/${this.props.match.params.id}.json`);
+            const quize = response.data;
+
+            this.setState({
+                quize,
+                loading: false
+            });
+
+        } catch (e) {
+            console.log(e)
+        }
+
         console.log('Quize ID', this.props.match.params.id)
     }
 
@@ -109,21 +104,23 @@ class Quize extends Component {
                     <h1>Выберите один из ответов</h1>
                     <div>
                         {
-                            this.state.isFinished
-                            ? <FinishedQuize 
+                            this.state.loading
+                                ? <Loader/>
+                                : this.state.isFinished
+                                ? <FinishedQuize
                                     results={this.state.results}
                                     quize = {this.state.quize}
                                     onRetry={this.retryHandler}
-                                /> 
-                            : 
-                            <ActiveQuize 
-                            state={this.state.answerState}
-                            quizeLength={this.state.quize.length}
-                            question = {this.state.quize[this.state.activeQuestion].question}
-                            answers = {this.state.quize[this.state.activeQuestion].answers}
-                            onAnswerClick = {this.onAnswerClickHandler}
-                            answerNumber={this.state.activeQuestion + 1}
-                            />
+                                />
+                                : <ActiveQuize
+                                    state={this.state.answerState}
+                                    quizeLength={this.state.quize.length}
+                                    question = {this.state.quize[this.state.activeQuestion].question}
+                                    answers = {this.state.quize[this.state.activeQuestion].answers}
+                                    onAnswerClick = {this.onAnswerClickHandler}
+                                    answerNumber={this.state.activeQuestion + 1}
+                                />
+
                         }
                         
                     </div>                    
